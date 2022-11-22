@@ -2,7 +2,7 @@
 
 ## Database Schema Design
 
-`insert design here`
+![alt text](https://media.discordapp.net/attachments/533035859214073877/1044531080222474311/image.png?width=732&height=675)
 
 ## USER AUTHENTICATION
 

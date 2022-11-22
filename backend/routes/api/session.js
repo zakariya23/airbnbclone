@@ -45,7 +45,7 @@ router.post(
       });
     }
   );
-  
+
   // Log out
 router.delete(
     '/',
@@ -69,6 +69,9 @@ router.get(
       } else return res.json({ user: null });
     }
   );
+
+
+  // GET the current User
 
 
 
