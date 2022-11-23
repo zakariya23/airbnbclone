@@ -39,6 +39,10 @@ module.exports = (sequelize, DataTypes) => {
     };
     static associate(models) {
       // define association here
+      User.hasMany(models.Booking, {foreignKey: 'userId'});
+      User.hasMany(models.Spot, {foreignKey: 'ownerId'});
+      User.hasMany(models.Review, {foreignKey: 'userId'});
+
     };
   };
 
@@ -102,3 +106,6 @@ module.exports = (sequelize, DataTypes) => {
   );
   return User;
 };
+
+
+//npx sequelize model:generate --name Review --attributes spotId:integer,userId:integer,review:string,stars:integer
