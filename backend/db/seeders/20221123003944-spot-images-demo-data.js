@@ -13,20 +13,20 @@ module.exports = {
      * }], {});
     */
    options.tableName = 'SpotImages';
-   queryInterface.bulkInsert(options, [
+   await queryInterface.bulkInsert(options, [
     {
       spotId: 1,
-      url: 'https:// spotImage',
+      url: 'https:// spotImage1',
       preview: true
     },
     {
       spotId: 2,
-      url: 'https:// spotImage',
+      url: 'https:// spotImage2',
       preview: true
     },
     {
       spotId: 3,
-      url: 'https:// spotImage',
+      url: 'https:// spotImage3',
       preview: true
     },
 
@@ -35,10 +35,6 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
-    options.tableName = 'SpotImages';
-    const Op = Sequelize.Op;
-    return queryInterface.bulkDelete(options, {
-      reviewId: { [Op.in]: [1,2,3] }
-    }, {});
+    await queryInterface.bulkDelete('SpotImages', null, {})
   }
 };

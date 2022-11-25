@@ -13,14 +13,14 @@ module.exports = {
      * }], {});
     */
    options.tableName = 'Spots';
-   queryInterface.bulkInsert(options, [
+   await queryInterface.bulkInsert(options, [
     {
       ownerId: 1,
       address: '1234 sesame street',
       city: 'Toronto',
       state: 'Ohio',
       country: 'Canada',
-      lat: -54.87465,
+      lat: 52.87465,
       lng: 129.45691,
       name: 'cool house',
       description: 'nice house man',
@@ -49,17 +49,13 @@ module.exports = {
       name: 'gingerbread house',
       description: 'delicious house',
       price: 29.99
-    },
+    }
 
 
    ], {})
   },
 
   async down (queryInterface, Sequelize) {
-    options.tableName = 'Spots';
-    const Op = Sequelize.Op;
-    return queryInterface.bulkDelete(options, {
-      address: { [Op.in]: ['1234 sesame street', '231 food street', '1 north pole'] }
-    }, {});
+    await queryInterface.bulkDelete('Spots',null, {});
   }
 };

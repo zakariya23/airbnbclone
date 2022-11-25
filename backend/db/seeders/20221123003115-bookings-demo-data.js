@@ -13,7 +13,7 @@ module.exports = {
      * }], {});
     */
    options.tableName = 'Bookings';
-   queryInterface.bulkInsert(options, [
+   await queryInterface.bulkInsert(options, [
     {
       spotId: 1,
       userId: 1,
@@ -38,10 +38,6 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
-    options.tableName = 'Bookings';
-    const Op = Sequelize.Op;
-    return queryInterface.bulkDelete(options, {
-      spotId: { [Op.in]: [1,2,3] }
-    }, {});
+    await queryInterface.bulkDelete("Bookings", null, {})
   }
 };

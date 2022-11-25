@@ -13,18 +13,18 @@ module.exports = {
      * }], {});
     */
    options.tableName = 'ReviewImages';
-   queryInterface.bulkInsert(options, [
+   await queryInterface.bulkInsert(options, [
     {
       reviewId: 1,
-      url: 'https:// randomreview'
+      url: 'https:// randomreview1'
     },
     {
       reviewId: 2,
-      url: 'https:// randomreview'
+      url: 'https:// randomreview2'
     },
     {
       reviewId: 3,
-      url: 'https:// randomreview'
+      url: 'https:// randomreview3'
     },
 
 
@@ -32,10 +32,6 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
-    options.tableName = 'ReviewImages';
-    const Op = Sequelize.Op;
-    return queryInterface.bulkDelete(options, {
-      spotId: { [Op.in]: [1,2,3] }
-    }, {});
+    await queryInterface.bulkDelete('ReviewImages', null, {})
   }
 };
