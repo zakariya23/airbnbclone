@@ -16,7 +16,7 @@ module.exports = {
      * }], {});
     */
    options.tableName = 'Spots';
-   await queryInterface.bulkInsert(options, [
+   return queryInterface.bulkInsert(options, [
     {
       ownerId: 1,
       address: '1234 sesame street',
@@ -53,8 +53,6 @@ module.exports = {
       description: 'delicious house',
       price: 29.99
     }
-
-
    ], {});
   },
 
