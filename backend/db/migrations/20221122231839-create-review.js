@@ -12,7 +12,7 @@ module.exports = {
       spotId: {
         type: Sequelize.INTEGER,
         references: {
-          model: "Spots"
+          model: 'Spots'
         },
         onDelete: "CASCADE",
         allowNull: false
@@ -20,7 +20,7 @@ module.exports = {
       userId: {
         type: Sequelize.INTEGER,
         references: {
-          model: "Users",
+          model: 'Users',
         },
         onDelete: "CASCADE",
         allowNull: false
