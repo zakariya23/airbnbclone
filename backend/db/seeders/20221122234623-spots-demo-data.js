@@ -56,6 +56,8 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
-    await queryInterface.bulkDelete('Spots',null, {});
+    return queryInterface.bulkDelete(options, {
+      state: { [Op.in]: ['Ohio', 'florida', 'cold'] }
+    }, {});
   }
 };
