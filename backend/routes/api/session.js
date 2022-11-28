@@ -1,7 +1,7 @@
 // backend/routes/api/session.js
 const express = require('express');
 
-const { setTokenCookie, restoreUser } = require('../../utils/auth');
+const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth');
 const { User } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
@@ -71,8 +71,25 @@ router.get(
   );
 
 
-  // GET the current User
-
+// GET the current User
+router.get(
+  '/current',
+  requireAuth,
+  (req, res) => {
+    const { user } = req;
+    if (user) {
+      return res.json({
+        user: {
+          id: user.dataValues.id,
+          firstName: user.dataValues.firstName,
+          lastName: user.dataValues.lastName,
+          email: user.dataValues.email,
+          username: user.dataValues.username
+        }
+      });
+    } else return res.json({ user: null });
+  }
+);
 
 
   module.exports = router;
