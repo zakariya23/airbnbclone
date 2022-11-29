@@ -14,7 +14,8 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        onDelete: 'CASCADE'
       },
       firstName: {
         type: Sequelize.STRING(30),
@@ -54,6 +55,6 @@ module.exports = {
   },
   async down(queryInterface, Sequelize) {
     options.tableName = 'Users'
-    await queryInterface.dropTable('Users', options);
+    await queryInterface.dropTable(options, options);
   }
 };

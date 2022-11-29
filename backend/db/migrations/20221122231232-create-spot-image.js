@@ -20,8 +20,7 @@ module.exports = {
         references: {
           model: 'Spots'
         },
-        onDelete: "CASCADE",
-        allowNull: false
+        onDelete: 'set NULL'
       },
       url: {
         type: Sequelize.STRING,
@@ -44,6 +43,7 @@ module.exports = {
     }, options);
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('SpotImages', options);
+    options.tableName = 'SpotImages'
+    await queryInterface.dropTable(options, options);
   }
 };
