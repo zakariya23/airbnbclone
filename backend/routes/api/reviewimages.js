@@ -8,19 +8,19 @@ const { handleValidationErrors } = require('../../utils/validation');
 
 const router = express.Router()
 
-//Delete a Spot Image
+//Delete a Review Image
 router.delete('/:imageId', requireAuth, async(req, res)=>{
-    const image = await SpotImage.findByPk(req.params.imageId)
+    const image = await ReviewImage.findByPk(req.params.imageId)
     if(!image){
         return res.status(404).json({
-            message: "Spot Image couldn't be found",
+            message: "Review Image couldn't be found",
             statusCode: 404
           })
     }
 
-    const spot = await Spot.findByPk(image.spotId)
+    const review = await ReviewImage.findByPk(image.reviewId)
 
-    if(spot.ownerId !== req.user.id){
+    if(review.ownerId !== req.user.id){
         return res.status(403).json({
             message: "Forbidden",
             statusCode: 403
