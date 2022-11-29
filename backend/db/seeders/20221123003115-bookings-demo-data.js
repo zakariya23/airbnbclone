@@ -20,18 +20,21 @@ module.exports = {
     {
       spotId: 1,
       userId: 1,
-      startDate: new Date()
+      startDate: new Date(),
+      endDate: new Date(new Date().setDate(new Date().getDate() + 7))
     },
     {
       spotId: 2,
       userId: 2,
-      startDate: new Date()
+      startDate: new Date(),
+      endDate: new Date(new Date().setDate(new Date().getDate() + 7))
 
     },
     {
       spotId: 3,
       userId: 3,
-      startDate: new Date()
+      startDate: new Date(),
+      endDate: new Date(new Date().setDate(new Date().getDate() + 7))
     },
 
 
