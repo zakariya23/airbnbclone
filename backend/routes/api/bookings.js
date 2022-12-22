@@ -123,27 +123,46 @@ router.put('/:bookingId', requireAuth, validateBooking, async (req, res) => {
 
 //delete a booking
 
-router.delete('/:bookingId', requireAuth, async(req, res)=>{
-    const booking = await Booking.findByPk(req.params.bookingId)
-    if(!booking){
-        return res.status(404).json({
+router.delete('/:bookingId', requireAuth, async (req, res) => {
+
+        // Find the booking by its id
+        const booking = await Booking.findByPk(req.params.bookingId);
+
+        // If the booking was not found, return a 404 response
+        if (!booking) {
+          return res.status(404).json({
             message: "Booking couldn't be found",
             statusCode: 404
-          })
-    }
-    const today = new Date()
-    if(booking.starDate > today){
-        return res.status(403).json({
+          });
+        }
+
+        // If the booking has already started, return a 403 response
+        if (booking.startDate < new Date()) {
+          return res.status(403).json({
             message: "Bookings that have been started can't be deleted",
             statusCode: 403
-          })
-    }
-    await booking.destroy()
-    return res.status(200).json({
-        message: "Successfully deleted",
-        statusCode: 200
-      })
-})
+          });
+        }
+
+        // Check if the booking belongs to the current user or the spot belongs to the current user
+        if (booking.userId !== req.user.id) {
+          const spot = await Spot.findByPk(booking.spotId);
+          if (spot.ownerId !== req.user.id) {
+            return res.status(401).json({
+              message: "Unauthorized",
+              statusCode: 401
+            });
+          }
+        }
+
+        // If the booking is valid, delete it and return a success message
+        await booking.destroy();
+        res.json({
+          message: "Successfully deleted",
+          statusCode: 200
+        });
+});
+
 
 
 

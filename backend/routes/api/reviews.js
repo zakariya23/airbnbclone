@@ -126,18 +126,33 @@ router.put('/:reviewId', requireAuth, validateReview, async (req,res)=>{
 
 //Delete a Review Image
 router.delete('/:imageId', requireAuth, async(req, res)=>{
-  const image = await ReviewImage.findByPk(req.params.imageId)
-  if(!image){
+  const reviewImage = await ReviewImage.findByPk(req.params.imageId);
+
+    // If the review image was not found, return a 404 response
+    if (!reviewImage) {
       return res.status(404).json({
-          message: "Review Image couldn't be found",
-          statusCode: 404
-        })
-  }
-  await image.destroy()
-  return res.status(200).json({
+        message: "Review Image couldn't be found",
+        statusCode: 404
+      });
+    }
+
+    // Find the review associated with the review image
+    const review = await Review.findByPk(reviewImage.reviewId);
+
+    // Check if the review belongs to the current user
+    if (review.userId !== req.user.id) {
+      return res.status(401).json({
+        message: "Unauthorized",
+        statusCode: 401
+      });
+    }
+
+    // If the review image is valid, delete it and return a success message
+    await reviewImage.destroy();
+    res.json({
       message: "Successfully deleted",
       statusCode: 200
-    })
+    });
 })
 
 
