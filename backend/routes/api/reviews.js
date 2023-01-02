@@ -160,5 +160,33 @@ router.delete('/:imageId', requireAuth, async (req, res, next) => {
   }
 })
 
+//delete a review
+
+router.delete('/:reviewId', requireAuth, async (req, res, next) => {
+  const review = await Review.findByPk(req.params.reviewId)
+
+  if(!review){
+      res.status(404)
+      return res.json({
+          "message": 'Review could not be found',
+          "statusCode": 404
+      })
+  } else if (review.userId !== req.user.id){
+      res.status(403)
+      return res.json({
+          "message": "Forbidden",
+          "statusCode": 403
+      })
+  } else {
+      await review.destroy()
+
+      return res.json({
+          "message": "Successfully deleted",
+          "statusCode": 200
+      })
+  }
+
+})
+
 
 module.exports = router;
