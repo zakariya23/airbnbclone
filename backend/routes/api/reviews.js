@@ -47,6 +47,7 @@ router.get(
     })
     //add preview image to spot in return object
     for(let review of reviews){
+      review.dataValues.ReviewImages = review.ReviewImages;
       let currentSpot = await Spot.findByPk(review.spotId);
       let currentSpotImage = await SpotImage.findAll({
         where: {
@@ -168,7 +169,7 @@ router.delete('/:reviewId', requireAuth, async (req, res, next) => {
   if(!review){
       res.status(404)
       return res.json({
-          "message": 'Review could not be found',
+          "message": "Review couldn't be found",
           "statusCode": 404
       })
   } else if (review.userId !== req.user.id){
@@ -185,8 +186,7 @@ router.delete('/:reviewId', requireAuth, async (req, res, next) => {
           "statusCode": 200
       })
   }
-
-})
+});
 
 
 module.exports = router;
