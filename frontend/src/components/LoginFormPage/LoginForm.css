@@ -1,0 +1,46 @@
+/* Style the login form container */
+form {
+    width: 50%;
+    margin: 0 auto;
+    padding: 2rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+
+  /* Style the form labels */
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+  }
+
+  /* Style the form inputs */
+  input {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+
+  /* Style the submit button */
+  button[type='submit'] {
+    width: 100%;
+    padding: 0.8rem;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    cursor: pointer;
+  }
+
+  /* Style the error messages */
+  ul {
+    margin: 0;
+    padding: 0;
+  }
+  li {
+    list-style: none;
+    color: red;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+  }
