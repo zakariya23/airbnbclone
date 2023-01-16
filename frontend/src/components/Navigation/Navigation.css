@@ -42,3 +42,8 @@ ul {
   li button:hover {
     background-color: #d5d5d5;
   }
+
+
+  .hidden {
+    display: none;
+  }
