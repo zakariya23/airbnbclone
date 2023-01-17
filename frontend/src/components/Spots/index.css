@@ -1,0 +1,10 @@
+.main-wrapper {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+}
+
+.card-wrapper {
+  display: flex;
+  gap: 20px;
+}

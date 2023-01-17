@@ -1,0 +1,21 @@
+.hidden {
+    display: none;
+}
+
+.profile-menu-button {
+    font-size: 15px;
+    padding-right: 5px;
+}
+
+.profile-button {
+    border: 1px solid #dddddd;
+    box-sizing: border-box;
+    border-radius: 20px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 75px;
+    height: 40px;
+    padding: 5px 5px 5px 12px;
+    font-size: 25px;
+}
