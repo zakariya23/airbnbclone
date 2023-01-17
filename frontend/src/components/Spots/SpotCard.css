@@ -1,12 +1,43 @@
 .spot-card {
     display: flex;
     justify-content: center;
-    flex-direction: column;
     align-items: center;
-    height: 15em;
-    width: 15em;
-    border: 4px solid black;
+    height: fit-content;
+    width: 250px;
     border-radius: 10px;
     color: white;
     box-sizing: border-box;
+    position: relative;
+    overflow: hidden;
+}
+
+.spot-card .image {
+    width: 100%;
+    border-radius: 10px;
+    transition: 0.8s;
+}
+
+.spot-card .text {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.7);
+    text-align: center;
+    transform: translateY(100%);
+    transition: 0.8s;
+}
+
+.spot-card:hover .text {
+    transform: translateY(0%);
+}
+
+
+.text-bold {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.text-small {
+    font-size: '12px'
 }
