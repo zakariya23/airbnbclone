@@ -1,5 +1,5 @@
 .nav-bar-wrapper {
-  display: flex;
+  display: grid;
   justify-content: space-between;
   position: relative;
   padding: 0px 80px;

@@ -4,7 +4,10 @@ import SpotCard from './SpotCard';
 import './index.css';
 
 function Spots() {
-    const spots = useSelector(state => state.spots.allSpots.Spots)
+    const spotsObj = useSelector(state => state.spots.allSpots)
+
+    const spots = Object.values(spotsObj)
+
     if(!spots) return null
     return (
         <div className='main-wrapper'>
