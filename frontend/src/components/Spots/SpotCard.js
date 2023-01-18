@@ -8,7 +8,7 @@ function SpotCard(spot) {
     return (
         <div className="spot-card">
             <Link to={`/api/spots/${spot.id}`}>
-            <img className={'image'} src={image} alt="sample"></img>
+            <img className={'image'} src={spot.previewImage} alt="spotImage"></img>
             <p style={{'fontWeight': 'bold', 'fontSize': '14px'}}>{spot.city}, {spot.state}</p>
             <div style={{'fontSize': '12px'}}>
                 <span style={{'fontWeight': 'bold', 'fontSize': '13px'}}>

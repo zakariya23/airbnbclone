@@ -1,3 +1,5 @@
+import { csrfFetch } from "./csrf"
+
 const CREATE = 'spots/CREATE'
 const SINGLE = 'spots/SINGLE'
 const LOAD = 'spots/LOAD'
@@ -43,7 +45,7 @@ export const getSpotById = (id) => async dispatch => {
 }
 
 export const updateSpot = (id, spot) => async dispatch => {
-    const response = await fetch(`/api/spots/${id}`, {
+    const response = await csrfFetch(`/api/spots/${id}`, {
         method: 'PUT',
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(spot)
@@ -57,7 +59,7 @@ export const updateSpot = (id, spot) => async dispatch => {
 }
 
 export const removeSpot = (id) => async dispatch => {
-    const response = await fetch(`/api/spots/${id}`, {
+    const response = await csrfFetch(`/api/spots/${id}`, {
         method: 'DELETE',
         headers: { "Content-Type": "application/json" }
     })
@@ -77,8 +79,8 @@ const remove = (id) => {
     }
 }
 
-export const createSpot = (id, spot) => async dispatch => {
-    const response = await fetch(`/api/spots/${id}`, {
+export const createSpot = (spot) => async dispatch => {
+    const response = await csrfFetch(`/api/spots`, {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(spot)
@@ -91,12 +93,38 @@ export const createSpot = (id, spot) => async dispatch => {
     }
 }
 
+
+export const createSpotImage = (spotId, spotImage) => async dispatch => {
+    const response = await csrfFetch(`/api/spots/${spotId}/images`, {
+        method: 'POST',
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(spotImage)
+      })
+
+    if(response.ok) {
+        const image = response.json()
+        dispatch(getAllSpots())
+        return image
+    }
+}
+
+
+
 export const getAllSpots = () => async dispatch => {
     const response = await fetch('/api/spots')
 
     if (response.ok) {
         const spots = await response.json()
         dispatch(loadSpots(spots))
+    }
+}
+
+export const getSpotsOfUser = () => async dispatch => {
+    const response = await fetch('/api/spots/current')
+
+    if(response.ok){
+        const spots = await response.json()
+        return spots
     }
 }
 

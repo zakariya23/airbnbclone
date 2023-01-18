@@ -1,8 +1,11 @@
 .nav-bar-wrapper {
-  display: grid;
+  display: flex;
+  align-items: center;
   justify-content: space-between;
   position: relative;
   padding: 0px 80px;
+  height: 60px;
+  border-bottom: solid 1px rgb(200, 200, 200);
 }
 
 .profile-dropdown {

@@ -6,6 +6,8 @@ import * as spotActions from './store/spots'
 import Navigation from "./components/Navigation";
 import Spots from "./components/Spots";
 import OneSpot from "./components/Spots/OneSpot/OneSpot";
+import MakeSpotForm from "./components/Spots/MakeSpotForm";
+import Account from './components/Account/Index'
 
 function App() {
   const dispatch = useDispatch();
@@ -26,7 +28,12 @@ function App() {
           <Route path='/api/spots/:id'>
             <OneSpot isLoaded={isLoaded}/>
           </Route>
-
+          <Route path='/new'>
+            <MakeSpotForm />
+          </Route>
+          <Route path='/account'>
+            <Account />
+          </Route>
           <Route>
             <h1>Page Not Found</h1>
           </Route>
