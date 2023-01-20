@@ -1,0 +1,22 @@
+.account-container {
+    display: flex;
+}
+
+.account-nav {
+    width: 20%;
+    border-right: 1px lightgray solid;
+    height: fit-content;
+    padding: 20px;
+}
+
+.account-nav-link {
+    display: block;
+    padding: 10px 0;
+    border-bottom: 1px lightgray solid;
+    text-align: center;
+}
+
+.account-content {
+    flex: 1;
+    padding: 20px;
+}

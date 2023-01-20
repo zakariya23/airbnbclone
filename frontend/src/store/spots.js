@@ -44,7 +44,7 @@ export const getSpotById = (id) => async dispatch => {
     }
 }
 
-export const updateSpot = (id, spot) => async dispatch => {
+export const updateSpot = (id, spot, url) => async dispatch => {
     const response = await csrfFetch(`/api/spots/${id}`, {
         method: 'PUT',
         headers: { "Content-Type": "application/json" },
@@ -53,6 +53,7 @@ export const updateSpot = (id, spot) => async dispatch => {
 
     if (response.ok) {
         const spot = await response.json()
+        spot.previewImage = url || null
         dispatch(update(spot))
         return spot
     }
@@ -66,7 +67,7 @@ export const removeSpot = (id) => async dispatch => {
 
     if (response.ok) {
         const spot = await response.json()
-        dispatch(remove(spot))
+        dispatch(remove(id))
         return spot
     }
 }
@@ -79,7 +80,9 @@ const remove = (id) => {
     }
 }
 
-export const createSpot = (spot) => async dispatch => {
+export const createSpot = (spot, spotImage) => async dispatch => {
+    spot.lat = 21
+    spot.lng = 22
     const response = await csrfFetch(`/api/spots`, {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
@@ -88,23 +91,18 @@ export const createSpot = (spot) => async dispatch => {
 
     if (response.ok) {
         const spot = await response.json()
-        dispatch(create(spot))
-        return spot
-    }
-}
+        const imageResponse = await csrfFetch(`/api/spots/${spot.id}/images`, {
+            method: 'POST',
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(spotImage)
+          })
 
-
-export const createSpotImage = (spotId, spotImage) => async dispatch => {
-    const response = await csrfFetch(`/api/spots/${spotId}/images`, {
-        method: 'POST',
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify(spotImage)
-      })
-
-    if(response.ok) {
-        const image = response.json()
-        dispatch(getAllSpots())
-        return image
+        if(imageResponse.ok){
+            const image = await imageResponse.json()
+            spot.previewImage = image.url
+            dispatch(create(spot))
+            return spot
+        }
     }
 }
 
@@ -153,7 +151,7 @@ const spotsReducer = (state = initialState, action) => {
             newState.allSpots[action.spot.id] = action.spot
             return newState
         case DELETE:
-            newState = { ...state, allSpots: { ...state.allSpots } }
+            newState = {...state, allSpots: {...state.allSpots} }
             delete newState.allSpots[action.id]
             return newState
         default:

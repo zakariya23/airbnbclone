@@ -9,11 +9,13 @@ function Navigation({ isLoaded }){
 
   return (
 <div className='nav-bar-wrapper'>
-      {/* <li> */}
+<div className="home-link-wrapper">
         <NavLink exact to="/">airbnbclone</NavLink>
-      {/* </li> */}
+        </div>
+        <div className="profile-button-wrapper">
       {isLoaded && (  <ProfileButton user={sessionUser} />
         )}
+        </div>
             </div>
   );
 }

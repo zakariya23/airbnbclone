@@ -1,18 +1,35 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import * as spotActions from '../../../store/spots'
+import * as reviewActions from "../../../store/reviews";
 import ReservationForm from "./ReservationForm";
 import "./OneSpot.css"
+import Reviews from "./Reviews";
+import WriteReviewForm from "./Reviews/WriteReviewForm";
 
 function OneSpot () {
     const dispatch = useDispatch()
     const { id } = useParams()
+
+    const [ showForm, setShowForm ] = useState(false)
+
+    const formClick = () => {
+        if(showForm) setShowForm(false)
+        else setShowForm(true)
+    }
+
+
+
     useEffect(() => {
         dispatch(spotActions.getSpotById(id))
+        dispatch(reviewActions.spotReviews(id))
     }, [id, dispatch])
 
+
+
 const spot = useSelector(state => state.spots.singleSpot)
+const reviews = Object.values(useSelector(state => state.reviews.spot))
 
 if(!spot) return null
 return ( <div className="wrapper-for-info">
@@ -43,6 +60,16 @@ return ( <div className="wrapper-for-info">
     </div>
     <div className="reserve-form"><ReservationForm {...spot} /></div>
 </div>
+<div>
+{showForm ? (
+                    <WriteReviewForm hideForm={() => setShowForm(false)}/>
+                ) : (
+                    <button onClick={formClick}>Create a review</button>
+                )}
+                     {reviews.length ? (
+                    <Reviews reviews={reviews}/>
+                ) : (<div>No Reviews</div>)}
+            </div>
 </div>
 )
 }

@@ -1,7 +1,7 @@
 //import { useState } from "react"
 import { useDispatch } from "react-redux"
-import { removeSpot } from "../../store/spots"
 import { Link } from "react-router-dom"
+import { getAllSpots, removeSpot } from "../../../store/spots"
 
 export default function UserSpotInfo (spot) {
     const dispatch = useDispatch()
@@ -12,8 +12,9 @@ export default function UserSpotInfo (spot) {
             // add modal here to make the check work to ask the user
             // if they are sure they want to delete that spot
             const deletedSpot = await dispatch(removeSpot(spot.id))
+            await dispatch(getAllSpots())
 
-            if(deletedSpot) alert(deletedSpot.message)
+            if(deletedSpot) console.log('deleted')
         //}
     }
 

@@ -1,9 +1,17 @@
-import React from "react";
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import SpotCard from './SpotCard';
 import './index.css';
+// import { clearReviews } from '../../store/reviews'
 
 function Spots() {
+    const dispatch = useDispatch()
+
+    //removes non relevant reviews from next spot
+    // useEffect(() => {
+    //     dispatch(clearReviews())
+    // })
+
     const spotsObj = useSelector(state => state.spots.allSpots)
 
     const spots = Object.values(spotsObj)

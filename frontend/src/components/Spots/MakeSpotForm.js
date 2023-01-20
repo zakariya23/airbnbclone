@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useHistory } from "react-router-dom"
-import { createSpot, createSpotImage } from "../../store/spots"
+import { createSpot } from "../../store/spots"
 import './MakeSpotForm.css'
 
 export default function CreateSpotForm () {
@@ -12,12 +12,12 @@ export default function CreateSpotForm () {
     const [ city, setCity ] = useState('')
     const [ state, setState ] = useState('')
     const [ country, setCountry ] = useState('')
-    const [ lat, setLat ] = useState('')
-    const [ lng, setLng ] = useState('')
+    // const [ lat, setLat ] = useState('')
+    // const [ lng, setLng ] = useState('')
     const [ name, setName ] = useState('')
     const [ description, setDescription ] = useState('')
     const [ price, setPrice ] = useState('')
-    const [ imageNumber, setImageNumber ] = useState('')
+    // const [ imageNumber, setImageNumber ] = useState('')
     const [ url, setURL ] = useState('')
     // const [ spotImages ] = useState([])
 
@@ -25,13 +25,28 @@ export default function CreateSpotForm () {
     const updateCity = (e) => setCity(e.target.value)
     const updateState = (e) => setState(e.target.value)
     const updateCountry = (e) => setCountry(e.target.value)
-    const updateLat = (e) => setLat(e.target.value)
-    const updateLng = (e) => setLng(e.target.value)
+    // const updateLat = (e) => setLat(e.target.value)
+    // const updateLng = (e) => setLng(e.target.value)
     const updateName = (e) => setName(e.target.value)
     const updateDescription = (e) => setDescription(e.target.value)
     const updatePrice = (e) => setPrice(e.target.value)
-    const updateImageNumber = (e) => setImageNumber(e.target.value)
+    // const updateImageNumber = (e) => setImageNumber(e.target.value)
     const updateURL = (e) => setURL(e.target.value)
+    const [ errors, setErrors ] = useState([])
+    const clearData = (createdSpot) => {
+        setAddress('')
+        setCity('')
+        setState('')
+        setCountry('')
+        // setLat('')
+        // setLng('')
+        setName('')
+        setDescription('')
+        setPrice('')
+        setErrors([])
+
+        history.push(`/spots/${createdSpot.id}`)
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -41,8 +56,8 @@ export default function CreateSpotForm () {
             city,
             state,
             country,
-            lat,
-            lng,
+            // lat,
+            // lng,
             name,
             description,
             price
@@ -53,30 +68,57 @@ export default function CreateSpotForm () {
             preview: true
         }
 
-        let createdSpot = await dispatch(createSpot(payload))
+        await dispatch(createSpot(payload, spotImage)).then(createdSpot => clearData(createdSpot)).catch(
+            async (res) => {
+                const data = await res.json();
+                if (data && data.errors) setErrors(data.errors);
+            });
 
-        if(createdSpot){
-            let newImage = await dispatch(createSpotImage(createdSpot.id, spotImage))
-            if(!newImage){
-                alert('Invalid Image. Please edit your image url.')
-            }
-            history.push(`/api/spots/${createdSpot.id}`)
-        }
 
         setAddress('')
         setCity('')
         setState('')
         setCountry('')
-        setLat('')
-        setLng('')
+        // setLat('')
+        // setLng('')
         setName('')
         setDescription('')
         setPrice('')
     }
 
+    const demoSpot = async () => {
+        const payload = {
+            address: '1234 Elm St',
+            city: "New York",
+            state: "New York",
+            country: "United States",
+            // lat: 40.730610,
+            // lng: -73.935242,
+            name: "City Escape",
+            description: "Cozy apartment in the heart of the city",
+            price: 150
+        }
+        const spotImage = {
+            url: 'https://res.cloudinary.com/demo/image/upload/v1564452417/sample.jpg',
+            preview: true
+        }
+
+        await dispatch(createSpot(payload, spotImage)).then(createdSpot => clearData(createdSpot)).catch(
+            async (res) => {
+                const data = await res.json();
+                if (data && data.errors) setErrors(data.errors);
+            });
+    }
+
     return (
-        <div>
+        <div style={{"display":"flex", "alignItems":"center", "justifyContent":"center"}}>
+             <button onClick={demoSpot}>Demo spot</button>
             <form className="create-spot-form" onSubmit={handleSubmit}>
+            <ul>
+                    {errors.map((error, idx) => (
+                        <li key={idx}>{error}</li>
+                    ))}
+                </ul>
                 <h4>{user.firstName} Make a spot form:</h4>
                 <input style={{"borderRadius":"10px 10px 0px 0px"}}
                     type={'text'}
@@ -106,7 +148,7 @@ export default function CreateSpotForm () {
                     value={country}
                     onChange={updateCountry}
                 />
-                <input
+                {/* <input
                     type={'number'}
                     placeholder={'Latitude'}
                     value={lat}
@@ -118,7 +160,7 @@ export default function CreateSpotForm () {
                     required
                     value={lng}
                     onChange={updateLng}
-                />
+                /> */}
                 <input
                     type={'text'}
                     placeholder={'Name of House'}
@@ -140,12 +182,12 @@ export default function CreateSpotForm () {
                     value={price}
                     onChange={updatePrice}
                 />
-                <input style={{"borderRadius":"10px", "marginBottom": "10px"}}
+                {/* <input style={{"borderRadius":"10px", "marginBottom": "10px"}}
                     type={'number'}
                     placeholder={'Number of Spot images'}
                     value={imageNumber}
                     onChange={updateImageNumber}
-                />
+                /> */}
                 <input style={{"borderRadius":"10px", "marginBottom": "10px"}}
                     type={'text'}
                     placeholder={'Cover image url'}

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { getSpotsOfUser } from "../../store/spots"
+import { getSpotsOfUser } from "../../../store/spots"
 import UserSpotInfo from "./UserSpotInfo"
 
 export default function SpotsOfUser() {

@@ -12,6 +12,7 @@ import Account from './components/Account/Index'
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
+
   useEffect(() => {
     dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
     dispatch(spotActions.getAllSpots());
@@ -25,7 +26,7 @@ function App() {
           <Route exact path='/'>
             <Spots />
           </Route>
-          <Route path='/api/spots/:id'>
+          <Route path='/spots/:id'>
             <OneSpot isLoaded={isLoaded}/>
           </Route>
           <Route path='/new'>

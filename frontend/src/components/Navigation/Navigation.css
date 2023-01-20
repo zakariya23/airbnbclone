@@ -6,6 +6,7 @@
   padding: 0px 80px;
   height: 60px;
   border-bottom: solid 1px rgb(200, 200, 200);
+  overflow: hidden;
 }
 
 .profile-dropdown {
@@ -23,3 +24,18 @@
   top: 50%;
   top: 40px;
 }
+
+.home-link-wrapper {
+  font-size: 20px;
+  color: #333;
+  float: left;
+  padding: 5px;
+}
+
+.profile-button-wrapper {
+  padding-right: 20px;
+  padding-right: 20px;
+  position: relative;
+  padding: 5px;
+}
+

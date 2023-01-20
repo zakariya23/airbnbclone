@@ -1,42 +1,37 @@
 import { NavLink, Route, Switch } from "react-router-dom"
-import EditUserSpot from "./EditUserSpot"
-import UserSpots from './UserSpots'
+import EditUserSpot from "../Account/UserSpots/EditUserSpot"
+import UserSpots from '../Account/UserSpots/UserSpots'
 import UserReviews from "./UserReviews"
+import './Account.css'
+import Profile from './User/index'
+
 
 function Account () {
-
-    // useEffect(() => {
-    //     // dispatch the get current reviews or users with if statement
-    // })
-
-
     return (
-        <div style={{'display':'flex', "justifyContent":"space-around", "width":"50%" }}>
-            <nav style={{'display':'flex', 'flexDirection':'column', "gap":"25px"}}>
-                <NavLink to={'/account/spots'}>Spots</NavLink>
-                <NavLink to={'/account/reviews'}>Reviews</NavLink>
+        <div className="account-container">
+            <nav className="account-nav">
+                <NavLink className="account-nav-link" to={'/account'}>Profile</NavLink>
+                <NavLink className="account-nav-link" to={'/account/spots'}>Spots</NavLink>
+                <NavLink className="account-nav-link" to={'/account/reviews'}>Reviews</NavLink>
             </nav>
-            <div>
-
-            <Switch>
-            <Route exact path='/account/spots'>
-                    <UserSpots />
-                </Route>
-
-                <Route path='/account/reviews'>
-                    <UserReviews />
-                </Route>
-                <Route path='/account/spots/edit/:id'>
-                    <EditUserSpot />
-                </Route>
-            </Switch>
+            <div className="account-content">
+            <Route exact path='/account'>
+        <Profile />
+    </Route>
+                <Switch>
+                    <Route exact path='/account/spots'>
+                        <UserSpots />
+                    </Route>
+                    <Route path='/account/reviews'>
+                        <UserReviews />
+                    </Route>
+                    <Route path='/account/spots/edit/:id'>
+                        <EditUserSpot />
+                    </Route>
+                </Switch>
             </div>
-
-
         </div>
     )
 }
-
-
 
 export default Account;

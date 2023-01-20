@@ -6,6 +6,7 @@ import OpenModalMenuItem from './OpenModalMenuItem';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
 import DemoLogin from "./DemoLogin";
+import './ProfileButton.css';
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -17,19 +18,21 @@ function ProfileButton({ user }) {
     setShowMenu(true);
   };
 
+  const navbarRef = useRef();
+
   useEffect(() => {
-    if (!showMenu) return;
+      if (!showMenu) return;
 
-    const closeMenu = (e) => {
-      if (!ulRef.current.contains(e.target)) {
-        setShowMenu(false);
-      }
-    };
+      const closeMenu = (e) => {
+        if (!navbarRef.current.contains(e.target)) {
+          setShowMenu(false);
+        }
+      };
 
-    document.addEventListener('click', closeMenu);
+      document.addEventListener('click', closeMenu);
 
-    return () => document.removeEventListener("click", closeMenu);
-  }, [showMenu]);
+      return () => document.removeEventListener("click", closeMenu);
+    }, [showMenu]);
 
   const closeMenu = () => setShowMenu(false);
 
@@ -39,10 +42,13 @@ function ProfileButton({ user }) {
     closeMenu();
   };
 
+
+
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
 
   return (
-    <>
+    <div className='nav-bar-wrapper' ref={navbarRef}>
+
       <button onClick={openMenu}>
         <i className="fas fa-user-circle" />
       </button>
@@ -73,7 +79,8 @@ function ProfileButton({ user }) {
           </>
         )}
       </ul>
-    </>
+
+    </div>
   );
 }
 
