@@ -19,17 +19,17 @@ module.exports = {
    await queryInterface.bulkInsert(options, [
     {
       spotId: 1,
-      url: 'https:// spotImage1',
+      url: 'https://images.unsplash.com/photo-1580183377265-1aa7761bf11e',
       preview: true
     },
     {
       spotId: 2,
-      url: 'https:// spotImage2',
+      url: 'https://images.unsplash.com/photo-1516315138947-26e8f277dbe3',
       preview: true
     },
     {
       spotId: 3,
-      url: 'https:// spotImage3',
+      url: 'https://images.unsplash.com/photo-1484154218962-a197022b5858',
       preview: true
     },
 

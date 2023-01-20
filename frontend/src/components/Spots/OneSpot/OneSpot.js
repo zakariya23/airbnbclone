@@ -11,6 +11,7 @@ import WriteReviewForm from "./Reviews/WriteReviewForm";
 function OneSpot () {
     const dispatch = useDispatch()
     const { id } = useParams()
+    const user = useSelector(state => state.session.user)
 
     const [ showForm, setShowForm ] = useState(false)
 
@@ -46,16 +47,22 @@ return ( <div className="wrapper-for-info">
             <span>{spot.numReviews} reviews · </span>
             <span>{spot.city}, {spot.state}, {spot.country}</span>
         </div>
-        <div className="share">
+        {/* <div className="share">
             <span><i className="fa-solid fa-arrow-up-from-bracket"></i> Share</span>
             <span><i className="fa-regular fa-heart"></i> Save</span>
-        </div>
+        </div> */}
     </div>
 </div>
-<div>WHERE PICTURES GO</div>
+<div className="image-container">
+                {spot.SpotImages?.map((image, i) => (
+                    (i === 0 ?
+                    <div key={i}><img className="first-spot-image" src={image.url} alt={i}/></div>
+                    : <img key={i} className="spot-image" src={image.url} alt={i}/>)
+                ))}
+            </div>
 <div className="details">
 <div className="host">
-                    <h3>This home hosted by </h3>
+                    <h3>This home hosted by</h3>
                     <div>profile pic</div>
     </div>
     <div className="reserve-form"><ReservationForm {...spot} /></div>
@@ -64,7 +71,7 @@ return ( <div className="wrapper-for-info">
 {showForm ? (
                     <WriteReviewForm hideForm={() => setShowForm(false)}/>
                 ) : (
-                    <button onClick={formClick}>Create a review</button>
+                    user && user.id !== spot.ownerId && <button onClick={formClick}>Create a review</button>
                 )}
                      {reviews.length ? (
                     <Reviews reviews={reviews}/>
