@@ -181,7 +181,7 @@ router.get('/current', requireAuth, async (req, res)=>{
     const allStars = await spot.getReviews({
       attributes: [[sequelize.fn('AVG', sequelize.col("stars")), "avgRating"]]
     })
-   
+
     let avgRating = allStars[0].dataValues.avgRating
     spot.dataValues.avgRating = parseFloat(Number(avgRating).toFixed(1))
 

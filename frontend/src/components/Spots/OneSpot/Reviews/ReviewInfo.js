@@ -7,9 +7,8 @@ export default function ReviewInfo (review) {
     const user = useSelector(state => state.session.user)
 
     const deleteAReview = async () => {
-        const deletedReview = await dispatch(removeReview(review.id))
-        console.log(deletedReview)
-        console.log('success')
+        const deletedReview = await dispatch(removeReview(review.id, review.spotId))
+
     }
 
     if(!review.User) return null

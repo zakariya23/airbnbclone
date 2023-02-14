@@ -1,7 +1,8 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import { useDispatch } from 'react-redux';
-import { NavLink } from "react-router-dom";
+import { NavLink, Redirect } from "react-router-dom";
+import { useHistory } from 'react-router-dom';
 import * as sessionActions from '../../store/session';
 import OpenModalMenuItem from './OpenModalMenuItem';
 import LoginFormModal from '../LoginFormModal';
@@ -14,6 +15,7 @@ export default function ProfileButton({ user, navbarRef }) {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
+  const history = useHistory(); // import useHistory hook
 
 
   const openMenu = (e) => {
@@ -38,7 +40,8 @@ export default function ProfileButton({ user, navbarRef }) {
     e.preventDefault();
     dispatch(sessionActions.logout());
     setShowMenu(false);
-  };
+    history.push('/'); // redirect to home page '/'
+};
 
 
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
@@ -52,8 +55,9 @@ export default function ProfileButton({ user, navbarRef }) {
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
           <>
-            <li>{user.username}</li>
+            <li>Hello, {user.firstName}</li>
             <li>{user.firstName} {user.lastName}</li>
+            <li>{user.username}</li>
             <li>{user.email}</li>
             <NavLink to={'/account'}>Account</NavLink>
             <li>
@@ -62,14 +66,18 @@ export default function ProfileButton({ user, navbarRef }) {
           </>
         ) : (
           <>
-            <OpenModalMenuItem
-              itemText="Log In"
-              modalComponent={<LoginFormModal />}
-            />
-            <OpenModalMenuItem
-              itemText="Sign Up"
-              modalComponent={<SignupFormModal />}
-            />
+<li className="login-signup-button">
+  <OpenModalMenuItem
+    itemText="Log In"
+    modalComponent={<LoginFormModal />}
+  />
+</li>
+<li className="login-signup-button">
+  <OpenModalMenuItem
+    itemText="Sign Up"
+    modalComponent={<SignupFormModal />}
+  />
+</li>
             <DemoLogin />
           </>
         )}

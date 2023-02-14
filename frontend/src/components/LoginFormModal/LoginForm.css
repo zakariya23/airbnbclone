@@ -33,6 +33,13 @@ form {
     cursor: pointer;
   }
 
+  button[type='submit'][disabled] {
+    background-color: #ddd;
+    cursor: not-allowed;
+  }
+
+
+
   /* Style the error messages */
   ul {
     margin: 0;

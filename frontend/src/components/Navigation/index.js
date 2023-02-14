@@ -13,7 +13,9 @@ function Navigation({ isLoaded }){
   return (
     <div className='nav-bar-wrapper' ref={navbarRef}>
       <div className="home-link-wrapper">
-        <NavLink exact to="/">airbnbclone</NavLink>
+      <NavLink exact to="/">
+  <img src={process.env.PUBLIC_URL + '/fav-icon.ico'} alt="airbnbclone logo" />
+</NavLink>
       </div>
 
 

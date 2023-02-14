@@ -17,16 +17,25 @@ function SignupFormModal() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (password === confirmPassword) {
-      setErrors([]);
-      return dispatch(sessionActions.signup({ email, username, firstName, lastName, password }))
-        .then(closeModal)
-        .catch(async (res) => {
-          const data = await res.json();
-          if (data && data.errors) setErrors(data.errors);
-        });
+    setErrors([]);
+    if (email && username && firstName && lastName && password && confirmPassword) {
+      if (username.length >= 4 && password.length >= 6) {
+        if (password === confirmPassword) {
+          return dispatch(sessionActions.signup({ email, username, firstName, lastName, password }))
+            .then(closeModal)
+            .catch(async (res) => {
+              const data = await res.json();
+              if (data && data.errors) setErrors(data.errors);
+            });
+        } else {
+          return setErrors(['Confirm Password field must be the same as the Password field']);
+        }
+      } else {
+        return setErrors(['Username must have at least 4 characters and password must have at least 6 characters']);
+      }
+    } else {
+      return setErrors(['All fields must be filled']);
     }
-    return setErrors(['Confirm Password field must be the same as the Password field']);
   };
 
   return (
@@ -79,6 +88,7 @@ function SignupFormModal() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
+            minLength={6}
           />
         </label>
         <label>
@@ -90,8 +100,13 @@ function SignupFormModal() {
             required
           />
         </label>
-        <button type="submit">Sign Up</button>
-      </form>
+        <button
+          type="submit"
+          disabled={!email || !username || !firstName || !lastName || !password || !confirmPassword || username.length < 4 || password.length < 6 || password !== confirmPassword}
+        >
+          Sign Up
+        </button>
+        </form>
     </>
   );
 }

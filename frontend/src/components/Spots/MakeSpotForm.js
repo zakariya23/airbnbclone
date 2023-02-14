@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 import { useHistory } from "react-router-dom"
 import { createSpot } from "../../store/spots"
 import './MakeSpotForm.css'
@@ -7,7 +7,7 @@ import './MakeSpotForm.css'
 export default function CreateSpotForm () {
     const dispatch = useDispatch()
     const history = useHistory()
-    const user = useSelector(state => state.session.user)
+    // const user = useSelector(state => state.session.user)
     const [ address, setAddress ] = useState('')
     const [ city, setCity ] = useState('')
     const [ state, setState ] = useState('')
@@ -114,12 +114,13 @@ export default function CreateSpotForm () {
         <div style={{"display":"flex", "alignItems":"center", "justifyContent":"center"}}>
              <button onClick={demoSpot}>Demo spot</button>
             <form className="create-spot-form" onSubmit={handleSubmit}>
+            <button onClick={() => history.push('/')} style={{"position":"relative", "right":"160px", "border":"none", "background":"none", "cursor":"pointer"}}>X</button>
             <ul>
                     {errors.map((error, idx) => (
                         <li key={idx}>{error}</li>
                     ))}
                 </ul>
-                <h4>{user.firstName} Make a spot form:</h4>
+                <h4>create a spot:</h4>
                 <input style={{"borderRadius":"10px 10px 0px 0px"}}
                     type={'text'}
                     placeholder={'Address'}
@@ -192,6 +193,7 @@ export default function CreateSpotForm () {
                     type={'text'}
                     placeholder={'Cover image url'}
                     value={url}
+                    required
                     onChange={updateURL}
                 />
                 <button className="submitButton">Submit</button>

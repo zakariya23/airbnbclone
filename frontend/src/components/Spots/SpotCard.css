@@ -1,44 +1,45 @@
-.spot-card {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: fit-content;
+.spot-card-container {
+    position: relative;
     width: 275px;
     height: 325px;
     border-radius: 10px;
-    color: white;
-    box-sizing: border-box;
+    overflow: hidden;
+    display: flex;
+}
+
+.image-container {
+    width: 100%;
+    height: 100%;
     position: relative;
     overflow: hidden;
+    transition: transform 0.8s;
 }
 
-.spot-card .image {
-    width: 100%;
+.spot-image {
+    max-width: 100%;
+    max-height: 100%;
     border-radius: 10px;
-    transition: 0.8s;
+    transition: 0.4s;
 }
 
-.spot-card .text {
+.text-container {
     position: absolute;
     bottom: 0;
     width: 100%;
-    padding: 10px;
+    padding: 6px;
     background-color: rgba(255, 255, 255, 0.7);
-    text-align: center;
+    text-align: left;
     transform: translateY(100%);
-    transition: 0.8s;
+    transition: transform 0.6s;
+    z-index: 1;
+    opacity: 0;
 }
 
-.spot-card:hover .text {
+.spot-card-container:hover .image-container {
+    transform: scale(1.1);
+}
+
+.spot-card-container:hover .text-container {
     transform: translateY(0%);
-}
-
-
-.text-bold {
-    font-weight: bold;
-    font-size: 14px;
-}
-
-.text-small {
-    font-size: '12px'
+    opacity: 1;
 }

@@ -164,7 +164,7 @@ export default function EditUserSpot () {
                     placeholder={'Number of Spot images'}
                     value={imageNumber}
                     onChange={updateImageNumber}
-                />
+                />}
                 <input style={{"borderRadius":"10px", "marginBottom": "10px"}}
                     type={'text'}
                     placeholder={'Cover image url'}
