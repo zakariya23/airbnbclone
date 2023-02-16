@@ -144,7 +144,7 @@ router.get(
 
 
 
-        spot.dataValues.avgRating = parseFloat(Number(avgRating).toFixed(1)) //passed in local
+        spot.dataValues.avgRating = parseFloat(Number(avgRating).toFixed(3)); //passed in local
 
 
       let image = await SpotImage.findOne({

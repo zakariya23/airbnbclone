@@ -8,7 +8,25 @@ import "./OneSpot.css"
 import Reviews from "./Reviews";
 import WriteReviewForm from "./Reviews/WriteReviewForm";
 
+
+
+
+
 function OneSpot () {
+
+    function getAverageRating(reviews) {
+        if (reviews.length === 0) {
+            return 0;
+        }
+
+        const total = reviews.reduce((accumulator, review) => accumulator + review.stars, 0);
+        const average = total / reviews.length;
+
+        return average.toFixed(2);
+    }
+
+
+
     const dispatch = useDispatch()
     const { id } = useParams()
     const user = useSelector(state => state.session.user)
@@ -40,20 +58,20 @@ return ( <div className="wrapper-for-info">
     </h2>
     <div className="sub-info">
         <div className='ratings'>
-            <span><i className="fa-sharp fa-solid fa-star"></i>{spot.avgStarRating}</span>
-            <li>{spot.numReviews} reviews</li>
-            <li>{spot.city}, {spot.state}, {spot.country}</li>
-            <span><i className="fa-sharp fa-solid fa-star"></i>{spot.avgStarRating} ·</span>
-            <span>{spot.numReviews} reviews · </span>
-            <span>{spot.city}, {spot.state}, {spot.country}</span>
+        <span style={{"fontWeight":"normal"}}>
+    <i className="fa-sharp fa-solid fa-star" style={{"color": "yellow"}}></i>
+    {spot.avgStarRating === 0 ? 'New' : getAverageRating(reviews)}
+  </span>
+  <div className="after-reviews">
+  <span>{spot.numReviews} · </span>
+  <span>{spot.city}, {spot.state}, {spot.country}</span>
+  </div>
+
         </div>
-        {/* <div className="share">
-            <span><i className="fa-solid fa-arrow-up-from-bracket"></i> Share</span>
-            <span><i className="fa-regular fa-heart"></i> Save</span>
-        </div> */}
     </div>
 </div>
 <div className="image-container">
+<div className="reserve-form"><ReservationForm {...spot} /></div>
                 {spot.SpotImages?.map((image, i) => (
                     (i === 0 ?
                     <div key={i}><img className="first-spot-image" src={image.url} alt={i}/></div>
@@ -62,21 +80,24 @@ return ( <div className="wrapper-for-info">
             </div>
 <div className="details">
 <div className="host">
-                    <h3>This home hosted by</h3>
+                    <h3>This home hosted by {[spot.ownerId]}</h3>
                     <div>profile pic</div>
     </div>
-    <div className="reserve-form"><ReservationForm {...spot} /></div>
+
 </div>
-<div>
-{showForm ? (
-                    <WriteReviewForm hideForm={() => setShowForm(false)}/>
-                ) : (
-                    user && user.id !== spot.ownerId && <button onClick={formClick}>Create a review</button>
-                )}
-                     {reviews.length ? (
-                    <Reviews reviews={reviews}/>
-                ) : (<div>No Reviews</div>)}
-            </div>
+<div className="Reviews">
+    <h2>{reviews.length === 1 ? '1 Review' : `${reviews.length} Reviews`}  - Average Rating: {getAverageRating(reviews)}</h2>
+    {showForm ? (
+        <WriteReviewForm hideForm={() => setShowForm(false)} />
+    ) : (
+        user && user.id !== spot.ownerId && <button onClick={formClick}>Create a review</button>
+    )}
+    {reviews.length ? (
+        <Reviews reviews={reviews} />
+    ) : (
+        <div>No Reviews</div>
+    )}
+</div>
 </div>
 )
 }

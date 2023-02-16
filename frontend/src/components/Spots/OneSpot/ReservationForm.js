@@ -1,10 +1,10 @@
 import { useState } from "react"
 import "./OneSpot.css"
 
-export default function ReservationForm (spot) {
-    const [ checkIn, setCheckIn ] = useState()
-    const [ checkout, setCheckout ] = useState()
-    const [ guest, setGuest ] = useState(1)
+export default function ReservationForm(spot) {
+    const [checkIn, setCheckIn] = useState()
+    const [checkout, setCheckout] = useState()
+    const [guest, setGuest] = useState(1)
     const date = new Date()
     const today = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
     const futureDate = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate() + 5}`
@@ -19,49 +19,49 @@ export default function ReservationForm (spot) {
 
     }
     return (
-        <div className="form-container" style={{"paddingRight": "10px", "paddingLeft": "10px"}}>
+        <div className="form-container" style={{ "paddingRight": "10px", "paddingLeft": "10px" }}>
             <div>
                 <div className="sub-info">
-                    <div><span style={{"fontWeight": "bold"}}>${spot.price}</span> night</div>
+                    <div><span style={{ "fontWeight": "bold" }}>${spot.price}</span> night</div>
                     <div>
                         <span><i className="fa-sharp fa-solid fa-star"></i>{spot.avgStarRating} ·</span>
                         <span>{spot.numReviews} reviews</span>
                     </div>
                 </div>
                 <form
-                onSubmit={handleSubmit}
-                style={{"display":"flex","alignItems":"center", "flexDirection":"column"}}>
-                    <div style={{"display":"flex"}}>
-                    <label>
-                        CHECK-IN
-                        <input type={'date'}
-                        name={'check-in'}
-                        placeholder={'Add date'}
-                        value={checkIn ? checkIn : today.toString()}
-                        onChange={(e) => setCheckIn(e.target.value)}
-                        />
+                    onSubmit={handleSubmit}
+                    style={{ "display": "flex", "alignItems": "center", "flexDirection": "column" }}>
+                    <div style={{ "display": "flex" }}>
+                        <label>
+                            CHECK-IN
+                            <input type={'date'}
+                                name={'check-in'}
+                                placeholder={'Add date'}
+                                value={checkIn ? checkIn : today.toString()}
+                                onChange={(e) => setCheckIn(e.target.value)}
+                            />
 
-                    </label>
-                    <label>
-                        CHECKOUT
-                        <input type={'date'}
-                        name={'checkout'}
-                        placeholder={'Add date'}
-                        value={checkout ? checkout : futureDate.toString()}
-                        onChange={(e) => setCheckout(e.target.value)}
-                        />
-                    </label>
+                        </label>
+                        <label>
+                            CHECKOUT
+                            <input type={'date'}
+                                name={'checkout'}
+                                placeholder={'Add date'}
+                                value={checkout ? checkout : futureDate.toString()}
+                                onChange={(e) => setCheckout(e.target.value)}
+                            />
+                        </label>
                     </div>
                     <label>
                         Number of Guests
                         <input type={'number'}
-                        name={'guest'}
-                        placeholder={'1 guest'}
-                        value={guest}
-                        onChange={(e) => setGuest(e.target.value)}
+                            name={'guest'}
+                            placeholder={'1 guest'}
+                            value={guest}
+                            onChange={(e) => setGuest(e.target.value)}
                         />
                     </label>
-                    <button>Reserve</button>
+                    <button>Register</button>
                 </form>
             </div>
 
@@ -71,20 +71,20 @@ export default function ReservationForm (spot) {
             <section>
                 <div>
                     {checkIn && checkout && (
-                                              <>
-                                              <div className="spacing">
-                                                  <span>${spot.price} x {diffDays} nights</span>
-                                                  <span>${spot.price * 5}</span>
-                                              </div>
-                                              <div className="spacing">
-                                                <span>Cleaning Fee </span>
-                                                <span>${35 * diffDays}</span>
-                                            </div>
-                                            <div className="spacing">
-                                                <span>Service Fee </span>
-                                                <span>${25 * diffDays}</span>
-                                            </div>
-                                          </>
+                        <>
+                            <div className="spacing">
+                                <span>${spot.price} x {diffDays} nights</span>
+                                <span>${spot.price * 5}</span>
+                            </div>
+                            <div className="spacing">
+                                <span>Cleaning Fee </span>
+                                <span>${35 * diffDays}</span>
+                            </div>
+                            <div className="spacing">
+                                <span>Service Fee </span>
+                                <span>${25 * diffDays}</span>
+                            </div>
+                        </>
                     )}
                 </div>
             </section>

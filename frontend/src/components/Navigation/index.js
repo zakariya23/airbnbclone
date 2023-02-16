@@ -21,7 +21,7 @@ function Navigation({ isLoaded }){
 
       <div className="make-a-spot-wrapper">
           { sessionUser && (
-            <NavLink to='/new'>Make a Spot!</NavLink>
+            <NavLink to='/new'>Create a New Spot</NavLink>
           )}
         </div>
 

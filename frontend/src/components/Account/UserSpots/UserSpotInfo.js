@@ -24,7 +24,8 @@ export default function UserSpotInfo (spot) {
             <h3>{spot.name}</h3>
             <div style={{"display":"flex", "justifyContent":"space-between", "alignContent":"center"}}>
                 {/* <button onClick={editSpot} >Edit</button> */}
-                <Link to={`/account/spots/edit/${spot.id}`}>Edit</Link>
+                <button><Link to={`/account/spots/edit/${spot.id}`}>Edit</Link></button>
+                <button onClick={deleteSpot}>Delete</button>
             </div>
         </div>
     )

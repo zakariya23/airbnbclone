@@ -31,6 +31,10 @@
     align-items: center;
 }
 
+.after-reviews{
+    padding-left: 10px;
+}
+
 .details {
     display: flex;
     flex-direction: row;
@@ -47,10 +51,12 @@
 }
 
 .reserve-form {
-    display: flex;
-    justify-content: right;
-    width: 100%;
-}
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 100;
+    bottom: 100;
+      }
 
 
 .form-container {

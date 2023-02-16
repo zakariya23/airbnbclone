@@ -15,7 +15,7 @@ export default function CreateReviewForm ({ hideForm }) {
     const {id} = useParams()
 
     const [ review, setReview ] = useState('')
-    const [ stars, setStars ] = useState('')
+    const [ stars, setStars ] = useState(0)
     const [ errors, setErrors ] = useState([])
     const [ url, setURL ] = useState('')
 
