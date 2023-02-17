@@ -50,7 +50,7 @@ function OneSpot () {
 const spot = useSelector(state => state.spots.singleSpot)
 const reviews = Object.values(useSelector(state => state.reviews.spot))
 
-if(!spot) return null
+if(!spot.Owner) return null
 return ( <div className="wrapper-for-info">
 <div className="header">
     <h2 className="text spot-header">
@@ -60,7 +60,7 @@ return ( <div className="wrapper-for-info">
         <div className='ratings'>
         <span style={{"fontWeight":"normal"}}>
     <i className="fa-sharp fa-solid fa-star" style={{"color": "yellow"}}></i>
-    {spot.avgStarRating === 0 ? 'New' : getAverageRating(reviews)}
+    {spot.avgStarRating === 0 ? getAverageRating(reviews) : 'New' }
   </span>
   <div className="after-reviews">
   <span>{spot.numReviews} · </span>
@@ -71,22 +71,25 @@ return ( <div className="wrapper-for-info">
     </div>
 </div>
 <div className="image-container">
-<div className="reserve-form"><ReservationForm {...spot} /></div>
                 {spot.SpotImages?.map((image, i) => (
                     (i === 0 ?
                     <div key={i}><img className="first-spot-image" src={image.url} alt={i}/></div>
                     : <img key={i} className="spot-image" src={image.url} alt={i}/>)
                 ))}
-            </div>
+</div>
 <div className="details">
 <div className="host">
-                    <h3>This home hosted by {[spot.ownerId]}</h3>
-                    <div>profile pic</div>
+                    <h3>This home hosted by {spot.Owner.firstName}</h3>
+                    <div><i className="fa-light fa-id-badge" style={{"color": "green"}}></i></div>
     </div>
 
 </div>
 <div className="Reviews">
-    <h2>{reviews.length === 1 ? '1 Review' : `${reviews.length} Reviews`}  - Average Rating: {getAverageRating(reviews)}</h2>
+    <h2>{reviews.length === 0 ? (
+  <h2>Be the first to leave a review!</h2>
+) : (
+  <h2>{reviews.length === 1 ? '1 Review' : `${reviews.length} Reviews`} - Average Rating: {getAverageRating(reviews)}</h2>
+)}</h2>
     {showForm ? (
         <WriteReviewForm hideForm={() => setShowForm(false)} />
     ) : (
@@ -98,7 +101,14 @@ return ( <div className="wrapper-for-info">
         <div>No Reviews</div>
     )}
 </div>
+<br>
+</br>
+<div className="check-these-out">
+    Check out these other great spots too 😎:
 </div>
+
+</div>
+
 )
 }
 
