@@ -59,7 +59,7 @@ export default function ProfileButton({ user, navbarRef }) {
             <li>{user.firstName} {user.lastName}</li>
             <li>{user.username}</li>
             <li>{user.email}</li>
-            <NavLink to={'/account'}>Account</NavLink>
+            <NavLink to={'/account'} className="account-link">Account</NavLink>
             <li>
               <button onClick={logout}>Log Out</button>
             </li>

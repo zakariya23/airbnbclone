@@ -19,7 +19,7 @@ ul {
 }
 
 li {
-    color: red;
+    color: rgb(0, 0, 0);
 }
 
 button {
@@ -38,12 +38,12 @@ button:hover {
 }
 
 button[type="button"] {
-    background-color: #f44336;
+    background-color: white;
     margin-right: 1rem;
 }
 
 button[type="button"]:hover {
-    background-color: #d32f2f;
+    background-color: white;
 }
 
 
