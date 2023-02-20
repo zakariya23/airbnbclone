@@ -111,16 +111,16 @@ export default function CreateSpotForm () {
     }
 
     return (
-        <div style={{"display":"flex", "alignItems":"center", "justifyContent":"center"}}>
-             <button onClick={demoSpot}>Demo spot</button>
+        <div style={{"display":"block", "alignItems":"center", "justifyContent":"center", "fontFamily": "system-ui"}}>
+
             <form className="create-spot-form" onSubmit={handleSubmit}>
-            <button onClick={() => history.push('/')} style={{"position":"relative", "right":"160px", "border":"none", "background":"none", "cursor":"pointer"}}>X</button>
+            <button onClick={() => history.push('/')} style={{"position":"relative", "right":"160px", "border":"none", "background":"none", "cursor":"pointer", "color":"red"}}>X</button>
             <ul>
                     {errors.map((error, idx) => (
                         <li key={idx}>{error}</li>
                     ))}
                 </ul>
-                <h4>create a spot:</h4>
+                <h4>Create a Spot:</h4>
                 <input style={{"borderRadius":"10px 10px 0px 0px"}}
                     type={'text'}
                     placeholder={'Address'}
@@ -198,6 +198,7 @@ export default function CreateSpotForm () {
                 />
                 <button className="submitButton">Submit</button>
             </form>
+           
         </div>
     )
 }

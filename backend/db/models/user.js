@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     toSafeObject() {
       const { firstName, lastName, id, username, email } = this; // context will be the User instance
-      return { id, username, email };
+      return { firstName, lastName, id, username, email };
     };
     validatePassword(password) {
       return bcrypt.compareSync(password, this.hashedPassword.toString());
@@ -19,6 +19,8 @@ module.exports = (sequelize, DataTypes) => {
       const user = await User.scope('loginUser').findOne({
         where: {
           [Op.or]: {
+            firstName: credential,
+            lastName: credential,
             username: credential,
             email: credential
           }

@@ -38,12 +38,12 @@ button:hover {
 }
 
 button[type="button"] {
-    background-color: white;
+    background-color: red;
     margin-right: 1rem;
 }
 
 button[type="button"]:hover {
-    background-color: white;
+    background-color: rgb(146, 7, 7);
 }
 
 

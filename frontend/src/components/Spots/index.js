@@ -7,10 +7,7 @@ import './index.css';
 function Spots() {
     const dispatch = useDispatch()
 
-    //removes non relevant reviews from next spot
-    // useEffect(() => {
-    //     dispatch(clearReviews())
-    // })
+
 
     const spotsObj = useSelector(state => state.spots.allSpots)
 

@@ -19,8 +19,10 @@ export default function UserReviews () {
     return (
         <div style={{"margin":"10px", "padding":"0px 10px", "display":"flex", "flexDirection":"column", "border":"lightGray solid 1px", "borderRadius":"10px"}}>
             <h2 style={{"borderBottom":"solid lightgray 1px", "padding":"10px"}}>Your Reviews:</h2>
+
             {usersReviews.map((review) => (
-                <UserReviewInfo key={review.id} {...review} />  ))}
+                <UserReviewInfo key={review.id} {...review}/>  ))}
                 </div>
+
             )
         }

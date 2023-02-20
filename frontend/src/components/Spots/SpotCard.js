@@ -24,7 +24,7 @@ function SpotCard(spot) {
 <div className="rating-container">
 <span style={{"fontWeight":"normal"}}>
     <i className="fa-sharp fa-solid fa-star" style={{"color": "yellow"}}></i>
-    {rating === 0 ? 'New' : rating}
+    {!rating ? 'New' : rating}
   </span>
 
 

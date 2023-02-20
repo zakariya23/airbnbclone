@@ -60,7 +60,8 @@ return ( <div className="wrapper-for-info">
         <div className='ratings'>
         <span style={{"fontWeight":"normal"}}>
     <i className="fa-sharp fa-solid fa-star" style={{"color": "yellow"}}></i>
-    {spot.avgStarRating === 0 ? getAverageRating(reviews) : 'New' }
+    {!spot.avgStarRating ? 'New' : getAverageRating(reviews) }
+    {console.log(spot.avgStarRating)}
   </span>
   <div className="after-reviews">
   <span>{spot.numReviews} · </span>
@@ -73,7 +74,7 @@ return ( <div className="wrapper-for-info">
 <div className="image-container">
                 {spot.SpotImages?.map((image, i) => (
                     (i === 0 ?
-                    <div key={i}><img className="first-spot-image" src={image.url} alt={i}/></div>
+                    <div key={i} className="first-spot-image-container"><img className="first-spot-image" src={image.url} alt={i}/></div>
                     : <img key={i} className="spot-image" src={image.url} alt={i}/>)
                 ))}
 </div>
@@ -103,9 +104,7 @@ return ( <div className="wrapper-for-info">
 </div>
 <br>
 </br>
-<div className="check-these-out">
-    Check out these other great spots too 😎:
-</div>
+
 
 </div>
 
