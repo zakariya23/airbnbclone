@@ -154,6 +154,18 @@ const spotsReducer = (state = initialState, action) => {
             newState = {...state, allSpots: {...state.allSpots} }
             delete newState.allSpots[action.id]
             return newState
+        case "spots/updateReviews":
+                const { spotId, reviews } = action.payload
+                return {
+                  ...state,
+                  allSpots: {
+                    ...state.allSpots,
+                    [spotId]: {
+                      ...state.allSpots[spotId],
+                      reviews,
+                    },
+                  },
+                }
         default:
             return state
     }

@@ -32,7 +32,8 @@ export default function ReviewInfo (review) {
             ) : (null)}
 
 {user && user.id === review.userId && (
-                <button onClick={deleteAReview}>Delete review</button>
+                <button onClick={deleteAReview}>Delete review </button>
+
             )}
         </div>
     )

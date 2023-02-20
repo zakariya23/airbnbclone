@@ -35,7 +35,7 @@ function SpotCard(spot) {
                         <span className="price-bold">
                             ${spot.price} {" "}
                         </span>
-                        night
+                        / night
 
                     </div>
 

@@ -60,7 +60,7 @@ return ( <div className="wrapper-for-info">
         <div className='ratings'>
         <span style={{"fontWeight":"normal"}}>
     <i className="fa-sharp fa-solid fa-star" style={{"color": "yellow"}}></i>
-    {!spot.avgStarRating ? 'New' : getAverageRating(reviews) }
+    {getAverageRating(reviews) === 0 ? 'New' : getAverageRating(reviews) }
     {console.log(spot.avgStarRating)}
   </span>
   <div className="after-reviews">
