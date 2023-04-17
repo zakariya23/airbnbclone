@@ -7,8 +7,8 @@ import ReservationForm from "./ReservationForm";
 import "./OneSpot.css"
 import Reviews from "./Reviews";
 import WriteReviewForm from "./Reviews/WriteReviewForm";
-
-
+import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // Import the required CSS
 
 
 
@@ -72,12 +72,14 @@ return ( <div className="wrapper-for-info">
     </div>
 </div>
 <div className="image-container">
-                {spot.SpotImages?.map((image, i) => (
-                    (i === 0 ?
-                    <div key={i} className="first-spot-image-container"><img className="first-spot-image" src={image.url} alt={i}/></div>
-                    : <img key={i} className="spot-image" src={image.url} alt={i}/>)
-                ))}
-</div>
+      <Carousel>
+        {spot.SpotImages?.map((image, i) => (
+          <div key={i}>
+            <img src={image.url} alt={`Spot image ${i}`} />
+          </div>
+        ))}
+      </Carousel>
+    </div>
 <div className="details">
 <div className="host">
                     <h3>This home hosted by {spot.Owner.firstName}</h3>

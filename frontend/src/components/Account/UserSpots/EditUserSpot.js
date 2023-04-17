@@ -1,13 +1,15 @@
 import { useDispatch, useSelector } from "react-redux"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useHistory, useParams } from "react-router-dom"
 import { updateSpot } from "../../../store/spots"
+import AddImageForm from "./EditPhotos"
 
 
 export default function EditUserSpot () {
     const dispatch = useDispatch()
     const history = useHistory()
     const { id } = useParams()
+    const [loading, setLoading] = useState(true);
     // const user = useSelector(state => state.session.user)
     const spot = useSelector(state => state.spots.allSpots[id])
 
@@ -52,6 +54,12 @@ export default function EditUserSpot () {
         history.push(`/spots/${updatedSpot.id}`)
     }
 
+    useEffect(() => {
+        if (spot) {
+            setLoading(false);
+        }
+    }, [spot]);
+
     const handleSubmit = async (e) => {
         e.preventDefault()
 
@@ -64,7 +72,7 @@ export default function EditUserSpot () {
             lng,
             name,
             description,
-            price
+            price,
         }
 
 
@@ -88,6 +96,9 @@ export default function EditUserSpot () {
             setPrice('')
         }
 
+    }
+    if (loading) {
+        return <div>Loading...</div>;
     }
     return (
         <div>
@@ -159,20 +170,11 @@ export default function EditUserSpot () {
                     value={price}
                     onChange={updatePrice}
                 />
-                {/* <input style={{"borderRadius":"10px", "marginBottom": "10px"}}
-                    type={'number'}
-                    placeholder={'Number of Spot images'}
-                    value={imageNumber}
-                    onChange={updateImageNumber}
-                />}
-                <input style={{"borderRadius":"10px", "marginBottom": "10px"}}
-                    type={'text'}
-                    placeholder={'Cover image url'}
-                    value={url}
-                    onChange={updateURL}
-                /> */}
+
+                <img src={spot.previewImage} style={{"height":"100px", "width":"100px"}}></img>
                 <button className="submitButton">Submit</button>
             </form>
+            <AddImageForm spotId={spot.id}/>
         </div>
     )
 }

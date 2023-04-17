@@ -1,7 +1,8 @@
 {
   "dependencies": {
     "bcryptjs": "^2.4.3",
-    "express-validator": "^6.14.2"
+    "express-validator": "^6.14.2",
+    "react-responsive-carousel": "^3.2.23"
   },
   "scripts": {
     "render-postbuild": "npm run build --prefix frontend",

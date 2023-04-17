@@ -5,6 +5,8 @@ const SINGLE = 'spots/SINGLE'
 const LOAD = 'spots/LOAD'
 const UPDATE = 'spots/UPDATE'
 const DELETE = 'spots/DELETE'
+const ADD_IMAGE = 'spots/ADD_IMAGE';
+const DELETE_IMAGE = 'spots/DELETE_IMAGE';
 
 const create = (spot) => {
     return {
@@ -12,6 +14,22 @@ const create = (spot) => {
         spot
     }
 }
+
+const deleteImage = (spotId, imageId) => {
+    return {
+      type: DELETE_IMAGE,
+      spotId,
+      imageId,
+    };
+  };
+
+const addImage = (spotId, image) => {
+    return {
+      type: ADD_IMAGE,
+      spotId,
+      image
+    };
+  };
 
 const loadSpots = (spots) => {
     return {
@@ -80,6 +98,20 @@ const remove = (id) => {
     }
 }
 
+export const addSpotImage = (spotId, imageUrl, preview) => async (dispatch) => {
+    const response = await csrfFetch(`/api/spots/${spotId}/images`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ url: imageUrl, preview }),
+    });
+    console.log(response)
+    if (response.ok) {
+      const image = await response.json();
+      dispatch(addImage(spotId, image));
+    }
+  };
+
+
 export const createSpot = (spot, spotImage) => async dispatch => {
     spot.lat = 21
     spot.lng = 22
@@ -126,6 +158,17 @@ export const getSpotsOfUser = () => async dispatch => {
     }
 }
 
+export const deleteSpotImage = (spotId, imageId) => async (dispatch) => {
+    const response = await csrfFetch(`/api/images/${imageId}`, {
+      method: 'DELETE',
+    });
+
+    if (response.ok) {
+      await response.json();
+      dispatch(deleteImage(spotId, imageId));
+    }
+  };
+
 
 const initialState = { allSpots: {}, singleSpot: {} }
 
@@ -154,6 +197,25 @@ const spotsReducer = (state = initialState, action) => {
             newState = {...state, allSpots: {...state.allSpots} }
             delete newState.allSpots[action.id]
             return newState
+        case ADD_IMAGE: {
+                newState = { ...state, allSpots: { ...state.allSpots } };
+                const currentImages = newState.allSpots[action.spotId].images;
+                newState.allSpots[action.spotId].images = Array.isArray(currentImages)
+                    ? [...currentImages, action.image]
+                    : [action.image];
+                return newState;
+            }
+            case DELETE_IMAGE: {
+                newState = { ...state, allSpots: { ...state.allSpots } };
+                const currentImages = newState.allSpots[action.spotId]?.images;
+                if (currentImages) {
+                    newState.allSpots[action.spotId].images = currentImages.filter((image) => image.id !== action.imageId);
+                }
+                newState.singleSpot = { ...newState.singleSpot };
+                newState.singleSpot.images = newState.allSpots[action.spotId]?.images || [];
+                return newState;
+            }
+
         case "spots/updateReviews":
                 const { spotId, reviews } = action.payload
                 return {
