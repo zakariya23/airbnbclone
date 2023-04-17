@@ -46,7 +46,7 @@
     margin-top: 20px;
   }
 
-  .image-container {
+  .image-container-2 {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -57,14 +57,14 @@
     border-radius: 4px;
   }
 
-  .image-container img {
+  .image-container-2 img {
     width: 100%;
     height: 100px;
     object-fit: cover;
     border-radius: 4px;
   }
 
-  .image-container button {
+  .image-container-2 button {
     padding: 4px 8px;
     background-color: #f44336;
     color: white;
@@ -74,6 +74,6 @@
     cursor: pointer;
   }
 
-  .image-container button:hover {
+  .image-container-2 button:hover {
     background-color: #d32f2f;
   }

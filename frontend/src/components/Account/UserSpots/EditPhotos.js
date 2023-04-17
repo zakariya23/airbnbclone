@@ -53,7 +53,7 @@ const AddImageForm = ({ spotId }) => {
         <div className="current-images">
           <h3>Current Images:</h3>
           {spot.SpotImages.map((image) => (
-            <div key={image.id} className="image-container">
+            <div key={image.id} className="image-container-2">
               <img src={image.url} alt="Spot" style={{"height":"100px", "width":"100px"}} />
               <button onClick={() => handleDeleteImage(image.id)}>Delete</button>
             </div>
