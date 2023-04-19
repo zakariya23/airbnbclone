@@ -1,8 +1,12 @@
-import { useState } from "react"
+import { useState,useEffect } from "react"
 import { useDispatch } from "react-redux"
 import { useHistory } from "react-router-dom"
 import { createSpot } from "../../store/spots"
 import './MakeSpotForm.css'
+import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
+import mapboxgl from 'mapbox-gl';
+
+mapboxgl.accessToken = 'pk.eyJ1IjoiY29tbWFuZGVyemVlIiwiYSI6ImNsZ255Y2pmZTA3OXAzbXFtNHB4aWp0bnMifQ.trObNVmB1uTEBgPkINgUfg';
 
 export default function CreateSpotForm () {
     const dispatch = useDispatch()
@@ -12,8 +16,8 @@ export default function CreateSpotForm () {
     const [ city, setCity ] = useState('')
     const [ state, setState ] = useState('')
     const [ country, setCountry ] = useState('')
-    // const [ lat, setLat ] = useState('')
-    // const [ lng, setLng ] = useState('')
+    const [ lat, setLat ] = useState('')
+    const [ lng, setLng ] = useState('')
     const [ name, setName ] = useState('')
     const [ description, setDescription ] = useState('')
     const [ price, setPrice ] = useState('')
@@ -25,8 +29,8 @@ export default function CreateSpotForm () {
     const updateCity = (e) => setCity(e.target.value)
     const updateState = (e) => setState(e.target.value)
     const updateCountry = (e) => setCountry(e.target.value)
-    // const updateLat = (e) => setLat(e.target.value)
-    // const updateLng = (e) => setLng(e.target.value)
+    const updateLat = (e) => setLat(e.target.value)
+    const updateLng = (e) => setLng(e.target.value)
     const updateName = (e) => setName(e.target.value)
     const updateDescription = (e) => setDescription(e.target.value)
     const updatePrice = (e) => setPrice(e.target.value)
@@ -38,8 +42,8 @@ export default function CreateSpotForm () {
         setCity('')
         setState('')
         setCountry('')
-        // setLat('')
-        // setLng('')
+        setLat('')
+        setLng('')
         setName('')
         setDescription('')
         setPrice('')
@@ -56,8 +60,8 @@ export default function CreateSpotForm () {
             city,
             state,
             country,
-            // lat,
-            // lng,
+            lat,
+            lng,
             name,
             description,
             price
@@ -79,12 +83,30 @@ export default function CreateSpotForm () {
         setCity('')
         setState('')
         setCountry('')
-        // setLat('')
-        // setLng('')
+        setLat('')
+        setLng('')
         setName('')
         setDescription('')
         setPrice('')
     }
+
+    useEffect(() => {
+        const geocoder = new MapboxGeocoder({
+          accessToken: mapboxgl.accessToken,
+          mapboxgl: mapboxgl,
+          placeholder: 'Address',
+          marker: false,
+        });
+
+        geocoder.on('result', (e) => {
+          setAddress(e.result.place_name);
+          setLat(e.result.geometry.coordinates[1]);
+          setLng(e.result.geometry.coordinates[0]);
+        });
+
+        // Add the geocoder to the "geocoder" div
+        geocoder.addTo('#geocoder');
+      }, []);
 
     const demoSpot = async () => {
         const payload = {
@@ -92,8 +114,8 @@ export default function CreateSpotForm () {
             city: "New York",
             state: "New York",
             country: "United States",
-            // lat: 40.730610,
-            // lng: -73.935242,
+            lat: 40.730610,
+            lng: -73.935242,
             name: "City Escape",
             description: "Cozy apartment in the heart of the city",
             price: 150
@@ -128,6 +150,7 @@ export default function CreateSpotForm () {
                     value={address}
                     onChange={updateAddress}
                 />
+                 <div id="geocoder" style={{ marginBottom: '10px' }}></div>
                 <input
                     type={'text'}
                     placeholder={'City'}
@@ -149,7 +172,7 @@ export default function CreateSpotForm () {
                     value={country}
                     onChange={updateCountry}
                 />
-                {/* <input
+                <input
                     type={'number'}
                     placeholder={'Latitude'}
                     value={lat}
@@ -161,7 +184,7 @@ export default function CreateSpotForm () {
                     required
                     value={lng}
                     onChange={updateLng}
-                /> */}
+                />
                 <input
                     type={'text'}
                     placeholder={'Name of House'}
@@ -198,7 +221,7 @@ export default function CreateSpotForm () {
                 />
                 <button className="submitButton">Submit</button>
             </form>
-           
+
         </div>
     )
 }

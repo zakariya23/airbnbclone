@@ -8,7 +8,7 @@ import Spots from "./components/Spots";
 import OneSpot from "./components/Spots/OneSpot/OneSpot";
 import MakeSpotForm from "./components/Spots/MakeSpotForm";
 import Account from './components/Account/Index'
-
+import MapComponent from "./components/Map/map";
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -25,6 +25,7 @@ function App() {
         <Switch>
           <Route exact path='/'>
             <Spots />
+
           </Route>
           <Route path='/spots/:id'>
             <OneSpot isLoaded={isLoaded}/>
@@ -40,7 +41,7 @@ function App() {
           </Route>
         </Switch>
       )}
-      
+
     </>
   );
 }

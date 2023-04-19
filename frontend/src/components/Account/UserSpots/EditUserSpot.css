@@ -1,0 +1,6 @@
+#geocoder > div {
+    min-width: 300px;
+    min-height: 36px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }

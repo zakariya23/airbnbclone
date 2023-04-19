@@ -1,9 +1,12 @@
 import { useDispatch, useSelector } from "react-redux"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { useHistory, useParams } from "react-router-dom"
 import { updateSpot } from "../../../store/spots"
 import AddImageForm from "./EditPhotos"
+import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
+import mapboxgl from 'mapbox-gl';
 
+mapboxgl.accessToken = 'pk.eyJ1IjoiY29tbWFuZGVyemVlIiwiYSI6ImNsZ255Y2pmZTA3OXAzbXFtNHB4aWp0bnMifQ.trObNVmB1uTEBgPkINgUfg';
 
 export default function EditUserSpot () {
     const dispatch = useDispatch()
@@ -12,7 +15,7 @@ export default function EditUserSpot () {
     const [loading, setLoading] = useState(true);
     // const user = useSelector(state => state.session.user)
     const spot = useSelector(state => state.spots.allSpots[id])
-
+    const geocoderContainerRef = useRef();
     const [ address, setAddress ] = useState(spot.address)
     const [ city, setCity ] = useState(spot.city)
     const [ state, setState ] = useState(spot.state)
@@ -40,6 +43,9 @@ export default function EditUserSpot () {
     const [ errors, setErrors ] = useState([])
     // const updateImageNumber = (e) => setImageNumber(e.target.value)
     // const updateURL = (e) => setURL(e.target.value)
+    const [map, setMap] = useState(null);
+
+
 
     const clearData = (updatedSpot) => {
         setAddress('')
@@ -55,10 +61,49 @@ export default function EditUserSpot () {
     }
 
     useEffect(() => {
+        const geocoder = new MapboxGeocoder({
+          accessToken: mapboxgl.accessToken,
+          // Other options if needed
+        });
+
+        if (geocoderContainerRef.current) {
+          geocoderContainerRef.current.appendChild(geocoder.onAdd());
+        }
+      }, []);
+
+    useEffect(() => {
         if (spot) {
             setLoading(false);
         }
+
     }, [spot]);
+
+    useEffect(() => {
+        const geocoder = new MapboxGeocoder({
+          accessToken: mapboxgl.accessToken,
+          mapboxgl: mapboxgl,
+          placeholder: 'Address',
+          marker: false,
+        });
+
+        geocoder.on('result', (e) => {
+            setAddress(e.result.place_name);
+            setLat(e.result.geometry.coordinates[1]);
+            setLng(e.result.geometry.coordinates[0]);
+            geocoder.setInput(e.result.place_name);
+          });
+
+        // Add the geocoder to the "geocoder" div
+        const geocoderDiv = document.getElementById('geocoder');
+        if (geocoderDiv) {
+          geocoderDiv.appendChild(geocoder.onAdd());
+        }
+
+        // Cleanup on unmount
+        return () => {
+          geocoderDiv.removeChild(geocoder.onRemove());
+        };
+      }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -109,13 +154,15 @@ export default function EditUserSpot () {
                     ))}
                 </ul>
                 <h4>Update {spot.name}</h4>
-                <input style={{"borderRadius":"10px 10px 0px 0px"}}
+                {/* <input style={{"borderRadius":"10px 10px 0px 0px"}}
                     type={'text'}
                     placeholder={'Address'}
                     required
                     value={address}
                     onChange={updateAddress}
-                />
+                /> */}
+          <div id="geocoder" style={{ marginBottom: '10px' }}></div>
+
                 <input
                     type={'text'}
                     placeholder={'City'}
